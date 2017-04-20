@@ -15,10 +15,11 @@ class MeteorologistController < ApplicationController
     # The street address that the user typed is in the variable @street_address.
     # ==========================================================================
 
-    #url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{@street_address}"
-
-    url = "https://api.darksky.net/forecast/10332e564fa7992d9a3dc75457a89342/#{@street_address}"
-
+    url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{@street_address}"
+    parsed_data = JSON.parse(open(url).read)
+    @latitude1 = parsed_data["results"][0]["geometry"]["location"]["lat"]
+    @longitude1 = parsed_data["results"][0]["geometry"]["location"]["lng"]
+    url = "https://api.darksky.net/forecast/10332e564fa7992d9a3dc75457a89342/#{@latitude1},#{@longitude1}"
     parsed_data = JSON.parse(open(url).read)
 
     @current_temperature = parsed_data["currently"]["temperature"]
@@ -29,7 +30,7 @@ class MeteorologistController < ApplicationController
 
     #@latitude = parsed_data["results"][0]["geometry"]["location"]["lat"]
     #@longitude = parsed_data["results"][0]["geometry"]["location"]["lng"]
-    
+
     #@current_temperature =
 
     #@current_summary = "Replace this string with your answer."
