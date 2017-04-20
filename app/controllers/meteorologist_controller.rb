@@ -17,23 +17,19 @@ class MeteorologistController < ApplicationController
 
     #url = "http://maps.googleapis.com/maps/api/geocode/json?address=#{@street_address}"
 
-    urlds = "https://api.darksky.net/forecast/10332e564fa7992d9a3dc75457a89342/#{@street_address}"
+    url = "https://api.darksky.net/forecast/10332e564fa7992d9a3dc75457a89342/#{@street_address}"
 
-    parsed_data = JSON.parse(open(urlds).read)
+    parsed_data = JSON.parse(open(url).read)
 
-    temperature = parsed_data["currently"]["temperature"]
-    summarycur = parsed_data["currently"]["summary"]
-    summarynsix = parsed_data["minutely"]["summary"]
-    summarynsevhr = parsed_data["hourly"]["summary"]
-    summarynsd = parsed_data["daily"]["summary"]
-    @current_temperature = temperature
-    @current_summary = summarycur
-    @summary_of_next_sixty_minutes = summarynsix
-    @summary_of_next_several_hours = summarynsevhr
-    @summary_of_next_several_days = summarynsd
+    @current_temperature = parsed_data["currently"]["temperature"]
+    @current_summary = parsed_data["currently"]["summary"]
+    @summary_of_next_sixty_minutes = parsed_data["minutely"]["summary"]
+    @summary_of_next_several_hours = parsed_data["hourly"]["summary"]
+    @summary_of_next_several_days = parsed_data["daily"]["summary"]
+
     #@latitude = parsed_data["results"][0]["geometry"]["location"]["lat"]
     #@longitude = parsed_data["results"][0]["geometry"]["location"]["lng"]
-
+    
     #@current_temperature =
 
     #@current_summary = "Replace this string with your answer."
